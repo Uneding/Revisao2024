@@ -1,10 +1,10 @@
 ﻿using system;
 class Program
 {
-    
     static void main
     {
-        
+        Console.WriteLine("Entre com o tamanho desejado da senha: ");
+        int tamanho = Console.
     }
     static string Aleatorio (int tamanho, char deci)
     {
