@@ -1,20 +1,25 @@
+using System.Text;
+
 namespace Gerador_Senhas
 {
     public class Funcaos
     {
-        static string Aleatorio(int tamanho, char deci)
+        public static string Aleatorio(int tamanho, int deci)
         {
             string Cara_Senha;
-            if (desci.ToLower() == "s")
+            if (deci == 1)
+            {
+               Cara_Senha = "0123456789";
+            }
+            else if (deci == 2)
+            {
+                Cara_Senha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            }else
             {
                 Cara_Senha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?";
             }
-            else
-            {
-                Cara_Senha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            }
             Random rand = new Random();
-            string senha = System.Text.StringBuilder(tamanho);
+            StringBuilder senha = new System.Text.StringBuilder(tamanho);
             for (int i = 0; i < tamanho; i++)
             {
                 char Cara_AL = Cara_Senha[rand.Next(Cara_Senha.Length)];
