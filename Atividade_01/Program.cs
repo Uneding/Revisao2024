@@ -1,23 +1,26 @@
 ﻿
-using System.ComponentModel.Design.Serialization;
 using Gerador_Senhas;
 
 int deci;
 deci = 0;
 
+junt2:
 Console.WriteLine("Entre com o tamanho da senha: ");
 if (int.TryParse(Console.ReadLine(), out int tamanho))
 {
+    junto:
     Console.WriteLine("Senha apenas com números?");
     if (string.IsNullOrWhiteSpace(Console.ReadLine()))
     {
         Console.WriteLine("Valor Invalido");
         Thread.Sleep(1500);
         Console.Clear();
+        goto junto;
     }
     else
     {
         deci = 1;
+        junt1:
         Console.WriteLine("Caracteres especiais ?");
         string? C_e = Console.ReadLine();
         if (C_e == null)
@@ -25,6 +28,7 @@ if (int.TryParse(Console.ReadLine(), out int tamanho))
             Console.WriteLine("Valor Invalido");
             Thread.Sleep(1500);
             Console.Clear();
+            goto junt1;
         }
         else
         {
@@ -47,5 +51,6 @@ else
     Console.WriteLine("Valor Invalido");
     Thread.Sleep(1500);
     Console.Clear();
+    goto junt2;
 }
 
