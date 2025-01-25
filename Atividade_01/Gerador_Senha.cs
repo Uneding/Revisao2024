@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Formats.Asn1;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace Gerador_Senhas
             int[] posi = new int[3];
             int[] teste = { 1, 2, 3 };
             int Num_Al = 0;
+            bool ver, cont;
             for (int i = 0; i < 3; i++)
             {
                 if (i == 0)
@@ -30,153 +32,245 @@ namespace Gerador_Senhas
             }
             Array.Sort(posi);
             int x = 0;
-            if (deci == 1)
+            switch (deci)
             {
-                for (int i = 0; i < tamanho; i++)
-                {
-                    Num_Al = rand.Next(48, 58);
-                    senha.Append((char)Num_Al);
-                }
-            }
-            else if (deci == 2)
-            {
-                for (int i = 0; i < tamanho; i++)
-                {
-                retornodic2:
-                    if (x < 2 && i == posi[x])
+                case 1:
+                    for (int i = 0; i < tamanho; i++)
                     {
-                        int y = rand.Next(1, 3);
-                        if (y == 1)
-                        {
-                            if (teste[0] == 1)
-                            {
-                                Num_Al = rand.Next(48, 58);
-                                senha.Append((char)Num_Al);
-                                teste[0] = 0;
-                                x++;
-                            }
-                            else if (teste[1] != 0)
-                            {
-                                goto retornodic2;
-                            }
-                        }
-                        else if (y == 2)
-                        {
-                            if (teste[1] == 2)
-                            {
-                            retornodic3:
-                                Num_Al = rand.Next(65, 123);
-                                if (Num_Al >= 91 && Num_Al <= 96)
-                                {
-                                    goto retornodic3;
-                                }
-                                else if(i == posi[x])
-                                {
-                                    senha.Append((char)Num_Al);
-                                    teste[1] = 0;
-                                    x++;
-                                }
-                                else if (teste[0] != 0)
-                                {
-                                    goto retornodic2;
-                                }
-                            }
-                        }
+                        Num_Al = rand.Next(48, 58);
+                        senha.Append((char)Num_Al);
                     }
-                    else
+                    break;
+                case 2:
+                    for (int i = 0; i < tamanho; i++)
                     {
-                    retorno:
-                        Num_Al = rand.Next(48, 91);
-                        if (Num_Al >= 58 && Num_Al <= 64)
+                        if (x < 2 && i == posi[x])
                         {
-                            goto retorno;
+                            ver = true;
+                            while (ver == true)
+                            {
+                                int y = rand.Next(1, 3);
+                                switch (y)
+                                {
+                                    case 1:
+                                        if (teste[0] == 1)
+                                        {
+                                            Num_Al = rand.Next(48, 58);
+                                            senha.Append((char)Num_Al);
+                                            ver = false;
+                                            teste[0] = 0;
+                                            x++;
+                                        }
+                                        else if (teste[1] == 0)
+                                        {
+                                            ver = false;
+                                        }
+                                        else
+                                        {
+                                            continue;
+                                        }
+                                        break;
+                                    default:
+                                        if (teste[1] == 2)
+                                        {
+                                            cont = true;
+                                            while (cont == true)
+                                            {
+                                                Num_Al = rand.Next(65, 123);
+                                                if (Num_Al >= 91 && Num_Al <= 96)
+                                                {
+                                                    continue;
+                                                }
+                                                else if (teste[1] == 2)
+                                                {
+                                                    senha.Append((char)Num_Al);
+                                                    teste[1] = 0;
+                                                    cont = false;
+                                                    ver = false;
+                                                    x++;
+                                                }
+                                                else if (teste[0] == 0)
+                                                {
+                                                    ver = false;
+                                                    cont = false;
+                                                }
+                                                else
+                                                {
+                                                    cont = false;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                }
+                            }
                         }
                         else
                         {
-                            senha.Append((char)Num_Al);
+                            int k = rand.Next(0, 4);
+                            switch (k)
+                            {
+                                case 0:
+                                    Num_Al = rand.Next(48, 58);
+                                    senha.Append((char)Num_Al);
+                                    break;
+                                case 1:
+                                    ver = true;
+                                    while (ver == true)
+                                    {
+                                        Num_Al = rand.Next(33, 96);
+                                        if ((Num_Al >= 46 && Num_Al <= 58) || Num_Al == 44 || Num_Al == 92 || Num_Al == 93 || Num_Al == 94 || Num_Al == 91 || Num_Al == 39 || Num_Al == 34)
+                                        {
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            senha.Append((char)Num_Al);
+                                            ver = false;
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    Num_Al = rand.Next(65, 91);
+                                    senha.Append((char)Num_Al);
+                                    break;
+                                default:
+                                    Num_Al = rand.Next(97, 123);
+                                    senha.Append((char)Num_Al);
+                                    break;
+                            }
                         }
                     }
-                }
-            }
-            else
-            {
-                for (int i5 = 0; i5 < tamanho; i5++)
-                {
-                retornodic4:
-                    if (x < 3 && i5 == posi[x])
+                    break;
+                default:
+                    for (int i5 = 0; i5 < tamanho; i5++)
                     {
-                        int y = rand.Next(1, 4);
-                        if (y == 1)
+                        Console.WriteLine($"-{i5}");
+                        if (x < 3 && i5 == posi[x])
                         {
-                            if (teste[0] == 1)
+                            ver = true;
+                            while (ver == true)
                             {
-                                Num_Al = rand.Next(48, 58);
-                                senha.Append((char)Num_Al);
-                                teste[0] = 0;
-                                x++;
-                            }
-                            else if (teste[1] != 0 || teste[2] != 0)
-                            {
-                                goto retornodic4;
+                                int y = rand.Next(1, 4);
+                                switch (y)
+                                {
+                                    case 1:
+                                        if (teste[0] == 1)
+                                        {
+                                            Num_Al = rand.Next(48, 58);
+                                            senha.Append((char)Num_Al);
+                                            ver = false;
+                                            teste[0] = 0;
+                                            x++;
+                                        }
+                                        else if (teste[1] == 0 && teste[2] == 0)
+                                        {
+                                            ver = false;
+                                        }
+                                        else
+                                        {
+                                            continue;
+                                        }
+                                        break;
+                                    case 2:
+                                        if (teste[1] == 2)
+                                        {
+                                            cont = true;
+                                            while (cont == true)
+                                            {
+                                                Num_Al = rand.Next(65, 123);
+                                                if (Num_Al >= 91 && Num_Al <= 96)
+                                                {
+                                                    continue;
+                                                }
+                                                else if (teste[1] == 2)
+                                                {
+                                                    senha.Append((char)Num_Al);
+                                                    teste[1] = 0;
+                                                    cont = false;
+                                                    ver = false;
+                                                    x++;
+                                                }
+                                                else if (teste[0] == 0 && teste[2] == 0)
+                                                {
+                                                    ver = false;
+                                                    cont = false;
+                                                }
+                                                else
+                                                {
+                                                    cont = false;
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    case 3:
+                                        cont = true;
+                                        while (cont == true)
+                                        {
+                                            Num_Al = rand.Next(33, 96);
+                                            if ((Num_Al >= 46 && Num_Al <= 58) || Num_Al == 44 || Num_Al == 92 || Num_Al == 93 || Num_Al == 94 || Num_Al == 91 || Num_Al == 39 || Num_Al == 34)
+                                            {
+                                                continue;
+                                            }
+                                            else if (teste[2] == 3)
+                                            {
+                                                senha.Append((char)Num_Al);
+                                                teste[2] = 0;
+                                                cont = false;
+                                                ver = false;
+                                                x++;
+                                            }
+                                            else if (teste[0] == 0 && teste[1] == 0)
+                                            {
+                                                ver = false;
+                                                cont = false;
+                                            }
+                                            else
+                                            {
+                                                cont = false;
+                                            }
+                                        }
+                                    break;
+                                }
                             }
                         }
-                        else if (y == 2)
+                        else
                         {
-                            if (teste[1] == 2)
+                            int f = rand.Next(0, 4);
+                            switch (f)
                             {
+                                case 0:
+                                    Num_Al = rand.Next(48, 58);
+                                    senha.Append((char)Num_Al);
+                                    break;
+                                case 1:
+                                    ver = true;
+                                    while (ver == true)
+                                    {
+                                        Num_Al = rand.Next(33, 96);
+                                        if ((Num_Al >= 46 && Num_Al <= 58) || Num_Al == 44 || Num_Al == 92 || Num_Al == 93 || Num_Al == 94 || Num_Al == 91 || Num_Al == 39 || Num_Al == 34)
+                                        {
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            senha.Append((char)Num_Al);
+                                            ver = false;
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    Num_Al = rand.Next(65, 91);
+                                    senha.Append((char)Num_Al);
+                                    break;
+                                default:
+                                    Num_Al = rand.Next(97, 123);
+                                    senha.Append((char)Num_Al);
+                                    break;
+                            }
+                        }
+                    }
 
-                            retornodic5:
-                                Num_Al = rand.Next(65, 123);
-                                if (Num_Al >= 91 && Num_Al <= 96)
-                                {
-                                    goto retornodic5;
-                                }
-                                else if (i5 == posi[x])
-                                {
-                                    senha.Append((char)Num_Al);
-                                    teste[1] = 0;
-                                    x++;
-                                }
-                                else if (teste[0] != 0 || teste[2] != 0)
-                                {
-                                    goto retornodic4;
-                                }
-                            }
-                        }
-                        else if (y == 3)
-                        {
-                            if (teste[2] == 3)
-                            {
-                            retornodic6:
-                                Num_Al = rand.Next(33, 96);
-                                if ((Num_Al >= 46 && Num_Al <= 58) || Num_Al == 44 || Num_Al == 92 || Num_Al == 93 || Num_Al == 94 || Num_Al == 91 || Num_Al == 39 || Num_Al == 34)
-                                {
-                                    goto retornodic6;
-                                }
-                                else if(i5 == posi[x])
-                                {
-                                    senha.Append((char)Num_Al);
-                                    teste[2] = 0;
-                                    x++;
-                                }
-                                else if (teste[0] != 0 || teste[1] != 0)
-                                {
-                                    goto retornodic4;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                    retorno1:
-                        Num_Al = rand.Next(33, 123);
-                        if (Num_Al == 46 || Num_Al == 44 || Num_Al == 59 || Num_Al == 58 || Num_Al == 92 || Num_Al == 93 || Num_Al == 94 || Num_Al == 91 || Num_Al == 47 || Num_Al == 39 || Num_Al == 34 || Num_Al == 96)
-                        {
-                            goto retorno1;
-                        }
-                        senha.Append((char)Num_Al);
-                    }
-                }
+                    break;
             }
             return senha.ToString();
         }
