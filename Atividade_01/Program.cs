@@ -1,7 +1,9 @@
 ﻿
+using System.Runtime.InteropServices.Marshalling;
 using Gerador_Senhas;
+using Layout;
 
-junt2:
+ junt2:
 Console.WriteLine("Entre com o tamanho da senha: ");
 if (int.TryParse(Console.ReadLine(), out int tamanho))
 {
@@ -27,5 +29,4 @@ else
     Thread.Sleep(1500);
     Console.Clear();
     goto junt2;
-}
-
+} 
