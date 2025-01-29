@@ -14,15 +14,20 @@ namespace Gerador_Senhas
         }
         private static int C_aleatorio()
         {
-            while (true)
+            HashSet<int> Valores_Indesejados = new HashSet<int>
+        {
+                44, 92, 93, 94, 91, 39, 34, 46, 58  
+        };
+            while(true)
             {
                 int Ver_Caracter = 0;
                 Ver_Caracter = De_Fun.Next(33, 96);
-                if ((Ver_Caracter >= 46 && Ver_Caracter <= 58) || Ver_Caracter == 44 || Ver_Caracter == 92 || Ver_Caracter == 93 || Ver_Caracter == 94 || Ver_Caracter == 91 || Ver_Caracter == 39 || Ver_Caracter == 34)
+                if (Valores_Indesejados.Contains(Ver_Caracter) && Ver_Caracter > 46 && Ver_Caracter < 58 && Ver_Caracter >= 65 && Ver_Caracter <= 91)
                 {
-                    continue;
+                    continue;  
                 }
                 return Ver_Caracter;
+                   
             }
         }
         private static int Lm_aleatorio()
@@ -157,7 +162,7 @@ namespace Gerador_Senhas
                         }
                     }
                     break;
-                default:
+                case 3:
                     for (int i5 = 0; i5 < tamanho; i5++)
                     {
 
