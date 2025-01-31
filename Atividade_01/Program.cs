@@ -2,7 +2,11 @@
 using System.Runtime.InteropServices.Marshalling;
 using Gerador_Senhas;
 using Layout;
-
+ var pagina = new Pagina("Página Principal");
+        var bloco1 = new Bloco(0f, 0f, 1f, 1f, "Green", "Bloco 1: Topo");
+        pagina.AdicionarBloco(bloco1);
+        pagina.ExibirPagina();
+        Console.ReadKey();
  junt2:
 Console.WriteLine("Entre com o tamanho da senha: ");
 if (int.TryParse(Console.ReadLine(), out int tamanho))
